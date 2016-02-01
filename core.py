@@ -19,21 +19,32 @@ cards = ["2", "3", "4", "5",
 		"6", "7", "8","9","10",
 		"J", "Q", "K", "A"]
 
-class Game(object):
-	my_cards = []
-	my_score = []
-	def __init__(self):
-		self.my_cards
-		self.my_score
+class Player(object):
+	"""Клас для создания игрока"""
+
+	def __init__(self, name, many, score, cards):
+		self.name = name
+		self.many = many
+		self.score = []
+		self.cards = []
+
+	def name(self):
+		return self.name, self.many
+
+class Game(Player):
+	"""Тут происходит самое действия игры"""
 
 	def choice(self):
+		rate = int(input("Ваша ставка: "))
+		self.many = self.many - rate
 		card = random.choice(cards)
-		self.my_cards.append(card)
-		self.my_score.append(data[card])
-		if sum(self.my_score) == 21:
+		self.cards.append(card)
+		self.score.append(data[card])
+
+		if sum(self.score) == 21:
 			print("Вы победили, у Вас 21 очко")
 			sys.exit()
-		elif sum(self.my_score) > 21:
+		elif sum(self.score) > 21:
 			print("Вы проиграли, у Вас больше 21 очка")
 			sys.exit()
-		return self.my_cards, sum(self.my_score)
+		return self.cards, sum(self.score), self.many
