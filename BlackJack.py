@@ -1,12 +1,13 @@
-from core import *
+from data.menu import Menu as menu
+from data.core import greetings as greet
 
 
-human = Menu("Human", 1000)
+
+print(greet)
 
 
 
 if __name__ == '__main__':
 
 
-
-	human.menu()
+    menu.menu()

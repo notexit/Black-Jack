@@ -1,26 +1,12 @@
+from data.core import cards
+from data.core import data
+
 import random
 import sys
-data = {
-    "2" : 2,
-    "3" : 3,
-    "4" : 4,
-    "5" : 5,
-    "6" : 6,
-    "7" : 7,
-    "8" : 8,
-    "9" : 9,
-    "10": 10,
-    "J" : 2,
-    "Q" : 3,
-    "K" : 4,
-    "A" : 11
-}
-cards = ["2", "3", "4", "5",
-        "6", "7", "8","9","10",
-        "J", "Q", "K", "A"]
 
-class Player(object):       #походу клас не верно назван уже, после всех изменений и дополнений
-    """Клас для создания всего"""
+
+class Game(object):
+    """Тут происходит самое действия игры"""
 
     def __init__(self, name, many):
         self.name = name    #Ваше имя
@@ -29,12 +15,6 @@ class Player(object):       #походу клас не верно назван 
         self.cards = []     #тут сохраняются ваши карты
         self.bank = []      #тут сохраняются все ставки
         self.loss = []      #ну это сколько проиграли все(под вопросом о существовании)
-
-    def name(self):
-        return self.name, self.many
-
-class Game(Player):
-    """Тут происходит самое действия игры"""
 
     def restart(self):
         while True:
@@ -49,7 +29,7 @@ class Game(Player):
             else:
                 print("Я не знаю такой команды")
 
-    def choice(self):
+    def game(self):
         rate = int(input("Ваша ставка: "))      #сделали ставку
         self.many -= rate       #отняли вашу ставку от вашей суммы
         self.bank.append(rate)  #додали эту сумму в банк
@@ -76,20 +56,10 @@ class Game(Player):
 
             choices = input("Хотите карту? 'y/n' : ").upper()
             if choices == "Y":
-                print(self.choice())
+                print(self.game())
             elif choices == "N":
                 sys.exit()
             else:
                 print("Пожалуста, введите нужною команду")
 
-class Menu(Game):
-    """Меню игры"""
-    def menu(self):
-        while True:
-            i = input("Хотите начать инру? 'y/n '").upper()
-            if i == "Y":
-                self.start()
-            elif i == "N":
-                sys.exit()
-            else:
-                print("Пожалуста, введите нужною команду")
+
