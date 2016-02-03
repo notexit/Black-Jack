@@ -25,13 +25,18 @@ class Game(object):
                 self.score = []
                 self.start()
             elif choice == "N":
+                print("Удачи Вам, спасибо за игру")
                 sys.exit()
             else:
                 print("Я не знаю такой команды")
 
     def game(self):
+
         rate = int(input("Ваша ставка: "))      #сделали ставку
         self.many -= rate       #отняли вашу ставку от вашей суммы
+        if self.many < 0:
+            print("У вас не достаточно денег")
+            self.game()
         self.bank.append(rate)  #додали эту сумму в банк
         #выдача карт и подсчет очков
         card = random.choice(cards)
@@ -49,17 +54,24 @@ class Game(object):
             self.loss.append(sum(self.bank))
             self.bank = []
             self.restart()
+
         return self.cards, sum(self.score), self.many
 
     def start(self):
+        print(self.game())
         while True:
-
             choices = input("Хотите карту? 'y/n' : ").upper()
             if choices == "Y":
                 print(self.game())
             elif choices == "N":
-                sys.exit()
+                if not self.bank != [] :
+                    sys.exit()
+                else:
+                    print(self.result())
+                    print(self.restart())
             else:
                 print("Пожалуста, введите нужною команду")
 
-
+    @staticmethod
+    def result():
+        print("Тут будет победитель..в будущем")

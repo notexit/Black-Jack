@@ -1,7 +1,9 @@
 import sys
 from data.game import Game as game
 
-human = game("Yurii", 1000)
+print("Приветствую, если хотите начать игру, введите Ваше имя")
+name = input("Введите Ваше имя :")
+human = game(name, 1000)
 
 class Menu(object):
     """Меню игры"""
