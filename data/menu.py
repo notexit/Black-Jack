@@ -5,6 +5,7 @@ print("Приветствую, если хотите начать игру, вв
 name = input("Введите Ваше имя :")
 human = game(name, 1000)
 
+
 class Menu(object):
     """Меню игры"""
 
@@ -13,7 +14,7 @@ class Menu(object):
         while True:
             i = input("Хотите начать инру? 'y/n '").upper()
             if i == "Y":
-               game.start(human)
+                game.start(human)
             elif i == "N":
                 sys.exit()
             else:
