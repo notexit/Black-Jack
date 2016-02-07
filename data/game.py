@@ -3,6 +3,7 @@ from data.core import data
 import random
 import sys
 
+institutions = range(2, 22) #заведения, это против кого играете
 
 class Game(object):
     """Тут происходит самое действия игры"""
@@ -82,5 +83,18 @@ class Game(object):
         self.result()
 
     def result(self):
-        print("Тут будет победитель..в будущем")
-        self.restart()
+        if int(sum(self.score)) > random.choice(institutions):  #если у Вас больше чем у заведения
+            self.bank.append(int(sum(self.bank) * 0.2)) #то выграш умножается на 20%
+            self.many += int(sum(self.bank))
+            print("Вы победили, и вграли банк в розмере {0}".format(int(sum(self.bank))))
+            self.bank = []
+        elif int(sum(self.score)) < random.choice(institutions): #ну тут ясно что проиграли
+            print("You lose")
+            self.bank = []
+        else:
+            print("Ничья, нужно сиграть еще раз") #если ничья
+            self.cards = []
+            self.score = []
+            self.bank.append(int(sum(self.bank) * 0.5)) #банк автоматически умножается на 50% от суммы банка
+            return self.start() #игра запускается вновь
+        return self.many, self.restart()
