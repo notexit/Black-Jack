@@ -20,7 +20,7 @@ class Game(object):
         while True:
             choice = input("Хотите сыграть еще ? 'y/n: ").upper()
             # если хотите сыграть еще, то нужно очистить выданые вам карты и ваши очки
-            if choice == "Y":
+            if choice == "Y" or choice == "" :
                 self.cards = []
                 self.score = []
                 self.start()
@@ -32,19 +32,23 @@ class Game(object):
 
     def game(self):
 
-        rate = input("Ваша ставка:  ").upper()  # сделали ставку или пропустили ставку
+        rate = input("Ваша ставка:  ")  # сделали ставку или пропустили ставку
 
-        if self.many < 0:
-            print("У вас не достаточно денег")
-            self.game()
-        if str(rate) == "":
+        if rate.isalpha():
+            print("Введите число ")
+            return self.game()
+
+        elif str(rate) == "":
             rate = 0
 
-        if self.many < 0:
-            print("У вас не достаточно денег")
+        if self.many >= int(rate):
+            self.many -= int(rate)  # отняли вашу ставку от вашей суммы
+
+        else:
+            print("У Вас не достаточно денег")
             self.game()
 
-        self.many -= int(rate)  # отняли вашу ставку от вашей суммы
+
         self.bank.append(int(rate))  # додали эту сумму в банк
         # выдача карт и подсчет очков
         card = random.choice(cards)
@@ -54,7 +58,7 @@ class Game(object):
         if sum(self.score) == 21:
             # если вы победили, то вся сумма из банка додается к вашей сумме
             print("Вы победили, у Вас 21 очко")
-            self.many += int(sum(self.bank) * 0.2)
+            self.many += int(sum(self.bank) * 0.5) #если Вы собрали ровно 21 то сумма в банке умножается в 50%
             self.bank = []  # банк пуст
             self.restart()
         elif sum(self.score) > 21:
@@ -75,7 +79,7 @@ class Game(object):
         print(self.game())
         while self.many != 0:
             choices = input("Хотите карту? 'y/n' : ").upper()
-            if choices == "Y":
+            if choices == "Y" or choices == "":
                 print(self.game())
             elif choices == "N":
                 if not self.bank != []:

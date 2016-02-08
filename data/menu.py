@@ -12,10 +12,10 @@ class Menu(object):
     @staticmethod
     def menu():
         while True:
-            choice = input("Хотите начать инру? 'y/n '").upper()
-            if choice == "Y":
+            choice = input("Хотите начать игру? 'y/n '").upper()
+            if choice == "Y" or choice == "":
                 game.start(human)
             elif choice == "N":
                 sys.exit()
             else:
-                print("Пожалуста, введите нужною команду")
+                print("Пожалуйста, введите нужною команду")
