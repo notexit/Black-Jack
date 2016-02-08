@@ -31,13 +31,19 @@ class Game(object):
                 print("Я не знаю такой команды")
 
     def game(self):
-        rate = input("Ваша ставка: 'c' - check ").upper()  # сделали ставку или пропустили ставку
+
+        rate = input("Ваша ставка:  ").upper()  # сделали ставку или пропустили ставку
 
         if self.many < 0:
             print("У вас не достаточно денег")
             self.game()
-        if str(rate) == "C":
+        if str(rate) == "":
             rate = 0
+
+        if self.many < 0:
+            print("У вас не достаточно денег")
+            self.game()
+
         self.many -= int(rate)  # отняли вашу ставку от вашей суммы
         self.bank.append(int(rate))  # додали эту сумму в банк
         # выдача карт и подсчет очков
@@ -48,7 +54,7 @@ class Game(object):
         if sum(self.score) == 21:
             # если вы победили, то вся сумма из банка додается к вашей сумме
             print("Вы победили, у Вас 21 очко")
-            self.many += int(sum(self.bank))
+            self.many += int(sum(self.bank) * 0.2)
             self.bank = []  # банк пуст
             self.restart()
         elif sum(self.score) > 21:
@@ -83,13 +89,15 @@ class Game(object):
         self.result()
 
     def result(self):
-        if int(sum(self.score)) > random.choice(institutions):  #если у Вас больше чем у заведения
+        score_institutions = random.choice(institutions)
+
+        if int(sum(self.score)) > score_institutions:  #если у Вас больше чем у заведения
             self.bank.append(int(sum(self.bank) * 0.2)) #то выграш умножается на 20%
             self.many += int(sum(self.bank))
-            print("Вы победили, и вграли банк в розмере {0}".format(int(sum(self.bank))))
+            print("Вы победили, и вырали банк в розмере {0}".format(int(sum(self.bank))))
             self.bank = []
-        elif int(sum(self.score)) < random.choice(institutions): #ну тут ясно что проиграли
-            print("You lose")
+        elif int(sum(self.score)) < score_institutions: #ну тут ясно что проиграли
+            print("Вы проиграли, заведения набрало {0} ".format(score_institutions))
             self.bank = []
         else:
             print("Ничья, нужно сиграть еще раз") #если ничья
