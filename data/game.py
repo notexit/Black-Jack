@@ -1,5 +1,5 @@
-from data.core import cards
-from data.core import data
+from data.all import cards
+from data.all import data
 import random
 import sys
 
@@ -18,7 +18,7 @@ class Game(object):
 
     def restart(self):
         while True:
-            choice = input("Хотите сыграть еще ? 'y/n: ").upper()
+            choice = input("Хотите сыграть еще ? 'y/n:' ").upper()
             # если хотите сыграть еще, то нужно очистить выданые вам карты и ваши очки
             if choice == "Y" or choice == "" :
                 self.cards = []
@@ -77,7 +77,7 @@ class Game(object):
 
     def start(self):
         print(self.game())
-        while self.many != 0:
+        while True:
             choices = input("Хотите карту? 'y/n' : ").upper()
             if choices == "Y" or choices == "":
                 print(self.game())

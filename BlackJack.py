@@ -1,5 +1,5 @@
 from data.menu import Menu as menu
-from data.core import greetings as greet
+from data.all import greetings as greet
 
 print(greet)
 
