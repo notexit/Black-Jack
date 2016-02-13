@@ -16,6 +16,7 @@ class Game(object):
         self.cards = []  # тут сохраняются ваши карты
         self.bank = []  # тут сохраняются все ставки
         self.loss = []  # ну это сколько проиграли все(под вопросом о существовании)
+        self.get_cards = cards()
 
     def restart(self):
         while True:
@@ -26,6 +27,7 @@ class Game(object):
                     print("У Вас не достаточно денег для продолжения\n Досвидания!")
                     sys.exit()
 
+                self.get_cards = cards()    #возвращает новый список карт
                 self.cards = []
                 self.score = []
                 self.start()
@@ -55,7 +57,8 @@ class Game(object):
 
         self.bank.append(int(rate))  # додали эту сумму в банк
         # выдача карт и подсчет очков
-        card = random.choice(cards)
+        card = random.choice(self.get_cards)
+        card = self.get_cards.pop()     #удаляет выбраную карту из колоды
         self.cards.append(card)
         self.score.append(data[card])
 
