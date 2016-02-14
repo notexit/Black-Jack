@@ -50,17 +50,21 @@ class Game(object):
 
         if self.many >= int(rate):
             self.many -= int(rate)  # отняли вашу ставку от вашей суммы
+            self.bank.append(int(rate))  # додали эту сумму в банк
+            # выдача карт и подсчет очков
+
+            if not self.cards :     #при начале новой роздачи, выдают сначало 2 карты
+                card = self.get_cards.pop()     #удаляет выбраную карту из колоды
+                self.cards.append(card)
+                self.score.append(data[card])
+            card = self.get_cards.pop()     #удаляет выбраную карту из колоды
+            self.cards.append(card)
+            self.score.append(data[card])
 
         else:
             print("У Вас не достаточно денег")
             self.game()
 
-        self.bank.append(int(rate))  # додали эту сумму в банк
-        # выдача карт и подсчет очков
-        card = random.choice(self.get_cards)
-        card = self.get_cards.pop()     #удаляет выбраную карту из колоды
-        self.cards.append(card)
-        self.score.append(data[card])
 
         if sum(self.score) == 21:
             # если вы победили, то вся сумма из банка додается к вашей сумме
