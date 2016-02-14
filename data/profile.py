@@ -1,8 +1,19 @@
-class Profile(object):
-    """клас создания профиля"""
+import json, os
 
-    def name(self):
-        name = input("Введите имя профиля : ")
-        many = 1000
+sav = os.path.abspath("profile.json")
 
-        return name, many
+def save(profile):
+	f = open(sav, 'w')
+	f.write(profile)
+	f.close()
+
+def load():
+	try:
+		with open(sav) as p:
+			return json.load(p)
+	except:
+		pass
+
+def create(name_profile, many_profile):
+	profile = json.dumps({'name' : name_profile, 'many': many_profile}, sort_keys=True, indent = 4)
+	save(profile)

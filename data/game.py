@@ -1,5 +1,6 @@
 from data.all import cards
 from data.all import data
+from data.profile import create
 import random
 import sys
 
@@ -20,6 +21,7 @@ class Game(object):
 
     def restart(self):
         while True:
+            create(self.name, self.many)    #сохраняется ваши результаты
             choice = input("Хотите сыграть еще ? 'y/n:' ").upper()
             # если хотите сыграть еще, то нужно очистить выданые вам карты и ваши очки
             if choice == "Y" or choice == "":
