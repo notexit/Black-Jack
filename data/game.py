@@ -1,7 +1,6 @@
 from data.all import cards
 from data.all import data
 from data.profile import create
-import random
 import sys
 
 
