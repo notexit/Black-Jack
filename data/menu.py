@@ -2,8 +2,10 @@ import sys, os
 from data.game import Game as game
 from data.profile import create, load
 
+
 class Menu(object):
     """Меню игры"""
+
     @staticmethod
     def menu():
         while True:
@@ -16,17 +18,21 @@ class Menu(object):
             else:
                 print("Пожалуйста, введите нужною команду")
 
+
 print("Приветствую, если хотите начать игру, создайте новый профиль или загрузите предведущую")
+
 
 def loads():
     lod = load()
     human = game(lod['name'], lod['many'])
     return human
 
+
 def creates():
     name_profile = input("Введите пожалуйста Ваше имя : ")
     many_profile = 1000
     create(name_profile, many_profile)
+
 
 while True:
     if os.path.exists("profile.json"):

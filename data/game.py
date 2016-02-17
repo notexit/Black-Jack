@@ -4,8 +4,6 @@ from data.profile import create
 import random
 import sys
 
-institutions = range(2, 22)  # заведения, это против кого играете
-
 
 class Game(object):
     """Тут происходит самое действия игры"""
@@ -18,6 +16,8 @@ class Game(object):
         self.bank = []  # тут сохраняются все ставки
         self.loss = []  # ну это сколько проиграли все(под вопросом о существовании)
         self.get_cards = cards()
+        self.score_institutions = []
+        self.card_institutions = []
 
     def restart(self):
         while True:
@@ -30,6 +30,8 @@ class Game(object):
                     sys.exit()
 
                 self.get_cards = cards()    #возвращает новый список карт
+                self.score_institutions = []
+                self.card_institutions = []
                 self.cards = []
                 self.score = []
                 self.start()
@@ -43,7 +45,7 @@ class Game(object):
 
         rate = input("Ваша ставка:  ")  # сделали ставку или пропустили ставку
 
-        if rate.isalpha():
+        if not rate.isdigit():
             print("Введите число ")
             return self.game()
 
@@ -67,15 +69,16 @@ class Game(object):
             print("У Вас не достаточно денег")
             self.game()
 
-
         if sum(self.score) == 21:
             # если вы победили, то вся сумма из банка додается к вашей сумме
             self.bank.append(int(sum(self.bank) * 0.5))
+            print("У Вас {0} очков".format(sum(self.score)))
             print("Вы победили, у Вас 21 очко, и выграли банк, в розмере {0}".format(sum(self.bank)))
             self.many += int(sum(self.bank))  # если Вы собрали ровно 21 то сумма в банке умножается в 50%
             self.bank = []  # банк пуст
             self.restart()
         elif sum(self.score) > 21:
+            print("У Вас {0} очков".format(sum(self.score)))
             print("Вы проиграли, у Вас больше 21 очка")
             self.loss.append(sum(self.bank))
             self.bank = []
@@ -107,15 +110,17 @@ class Game(object):
         self.result()
 
     def result(self):
-        score_institutions = random.choice(institutions)
+        score_institutions = self.institutions()
 
         if int(sum(self.score)) > score_institutions:  # если у Вас больше чем у заведения
             self.bank.append(int(sum(self.bank) * 0.2))  # то выграш умножается на 20%
             self.many += int(sum(self.bank))
+            print("У Вас {0} очков, заведения набрало {1} очков".format(sum(self.score), sum(self.score_institutions)))
             print("Вы победили, и вырали банк в розмере {0}".format(int(sum(self.bank))))
             self.bank = []
         elif int(sum(self.score)) < score_institutions:  # ну тут ясно что проиграли
             print("Вы проиграли, заведения набрало {0} ".format(score_institutions))
+            print("У Вас {0} очков, заведения набрало {1} очков".format(sum(self.score), sum(self.score_institutions)))
             self.bank = []
         else:
             print("Ничья, нужно сиграть еще раз")  # если ничья
@@ -124,3 +129,16 @@ class Game(object):
             self.bank.append(int(sum(self.bank) * 0.5))  # банк автоматически умножается на 50% от суммы банка
             return self.start()  # игра запускается вновь
         return self.many, self.restart()
+
+    def institutions(self):     #вот здесь играет заведение
+        self.card_institutions = self.get_cards.pop()
+        self.score_institutions.append(data[self.card_institutions])
+        if sum(self.score_institutions) == sum(self.score):
+            self.bank.append(50)
+            return sum(self.score_institutions)
+        elif sum(self.score_institutions) < sum(self.score):
+            self.bank.append(50)
+            self.institutions()
+        if sum(self.score_institutions) > 21:
+            return 0
+        return sum(self.score_institutions)
