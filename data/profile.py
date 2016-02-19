@@ -1,6 +1,13 @@
 import json, os
 
-sav = os.path.abspath("profile.json")
+path_ = "save"
+sav = os.path.abspath("save//profile.json")
+
+
+def savs():
+    if not os.path.exists(path_):
+        os.mkdir(path_)
+
 
 def save(profile):
     """Эта функция сохраняет профиль
@@ -10,6 +17,7 @@ def save(profile):
     f.write(profile)
     f.close()
 
+
 def load():
     """Эта функция загружает профиль"""
     try:
@@ -18,10 +26,12 @@ def load():
     except:
         pass
 
+
 def create(name_profile, many_profile):
     """Эта функция создает профиль профиль
     :param many_profile:
     :param name_profile:
     """
+    savs()
     profile = json.dumps({'name': name_profile, 'many': many_profile}, sort_keys=True, indent=4)
     save(profile)

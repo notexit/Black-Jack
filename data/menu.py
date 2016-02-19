@@ -4,7 +4,6 @@ from data.help import help as helps
 from data.check import start_game
 
 
-
 class Menu(object):
     """Меню игры"""
 

@@ -9,16 +9,18 @@ def loads():
     human = game(lod['name'], lod['many'])
     return human
 
+
 def creates():
     """Эта функция принимает параметры и передает для создания профиля"""
     name_profile = input("Введите пожалуйста Ваше имя : ")
     many_profile = 1000
     create(name_profile, many_profile)
 
+
 def start_game():
     """Эта фунция проверяет на существования уже профиля"""
     while True:
-        if os.path.exists("profile.json"):
+        if os.path.exists("save//profile.json"):
             choice = input("Вы желаете продолжить предведущую игру? y/n : ").upper()
             if choice == '' or choice == 'Y':
                 return loads()

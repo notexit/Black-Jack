@@ -44,12 +44,12 @@ class Game(object):
 
         rate = input("Ваша ставка:  ")  # сделали ставку или пропустили ставку
 
-        if not rate.isdigit():
+        if str(rate) == "":
+            rate = 0
+
+        elif not rate.isdigit():
             print("Введите число ")
             return self.game()
-
-        elif str(rate) == "":
-            rate = 0
 
         if self.many >= int(rate):
             self.many -= int(rate)  # отняли вашу ставку от вашей суммы
